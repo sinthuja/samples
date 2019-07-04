@@ -77,6 +77,25 @@ public function build(cellery:ImageName iName) returns error? {
                                                        "./resources/pet-store.swagger.json")
             }
         },
+        //resources: {
+        //   requests: {
+        //      cpu: "500m"
+        //      memory: "16Mi"
+        //   }
+        //},
+        //scalingPolicy: <cellery:AutoScalingPolicy> {
+        //                             minReplicas: 1,
+        //                             maxReplicas: 3,
+        //                             metrics: {
+        //                                cpu: <cellery:Percentage>{ threshold : 50 }
+        //                                memory: <cellery:Percentage>{ threshold : 50 }
+        //                             },
+        //                             overridable: false
+        //},
+        scalingPolicy: <cellery:ZeroScalingPolicy> {
+                        maxReplicas: 3,
+                        concurrencyTarget: 50
+        },
         envVars: {
             CATALOG_HOST: { value: cellery:getHost(catalogComponent) },
             CATALOG_PORT: { value: 80 },
