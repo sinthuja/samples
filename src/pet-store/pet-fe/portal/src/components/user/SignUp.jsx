@@ -35,7 +35,8 @@ class SignUp extends React.Component {
             notification: {
                 open: false,
                 message: ""
-            }
+            },
+            user: ""
         };
     }
 
@@ -62,7 +63,7 @@ class SignUp extends React.Component {
 
     handleFinish = () => {
         const self = this;
-        const {history} = self.props;
+        const {history, guestMode} = self.props;
         const {profile} = self.state;
         const config = {
             url: "/profile",
@@ -71,7 +72,10 @@ class SignUp extends React.Component {
         };
         utils.callApi(config)
             .then(() => {
-                history.replace("/");
+                // If (guestMode) {
+                self.state.user = "guest";
+                // I}
+                history.replace("/", self.state);
                 self.setState({
                     notification: {
                         open: true,
@@ -193,7 +197,9 @@ SignUp.propTypes = {
     }),
     history: PropTypes.shape({
         replace: PropTypes.func.isRequired
-    }).isRequired
+    }).isRequired,
+    user: PropTypes.string.isRequired,
+    guestMode: PropTypes.bool.isRequired
 };
 
 export default withRouter(SignUp);

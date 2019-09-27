@@ -120,9 +120,9 @@ const callAPI = (config, req) => new Promise((resolve, reject) => {
  * @return {Promise<any>} The promise for the data fetch request
  */
 const callCatalogService = (config, req) => callAPI({
-    ...config,
-    url: CATALOG_SERVICE_URL + config.url
-}, req);
+        ...config,
+        url: CATALOG_SERVICE_URL + config.url
+    }, req);
 
 /**
  * Call an API in the Customers Service.
@@ -132,9 +132,9 @@ const callCatalogService = (config, req) => callAPI({
  * @return {Promise<any>} The promise for the data fetch request
  */
 const callCustomersService = (config, req) => callAPI({
-    ...config,
-    url: CUSTOMERS_SERVICE_URL + config.url
-}, req);
+        ...config,
+        url: CUSTOMERS_SERVICE_URL + config.url
+    }, req);
 
 /**
  * Call an API in the Orders Service.
@@ -144,9 +144,9 @@ const callCustomersService = (config, req) => callAPI({
  * @return {Promise<any>} The promise for the data fetch request
  */
 const callOrdersService = (config, req) => callAPI({
-    ...config,
-    url: ORDERS_SERVICE_URL + config.url
-}, req);
+        ...config,
+        url: ORDERS_SERVICE_URL + config.url
+    }, req);
 
 /*
  * API endpoint for getting a list of accessories available in the catalog.
@@ -223,12 +223,11 @@ service.post("/orders", (req, res) => {
  * API endpoint for getting the user profile.
  */
 service.get("/profile", (req, res) => {
-    let username = req.get(CELLERY_USER_HEADER);
+    const username = req.get(CELLERY_USER_HEADER);
     const config = {
         url: `/customers/${username}`,
         method: "GET"
     };
-    // console.log("username: " + username);
     callCustomersService(config, req)
         .then((data) => {
             handleSuccess(res, {

@@ -23,7 +23,7 @@ const customersDataDir = "data";
 const customersDataFile = `${customersDataDir}/customers.json`;
 
 fs.mkdirSync(customersDataDir); // eslint-disable-line no-sync
-fs.writeFileSync(customersDataFile, "[{\"username\": \"guest\"}]", "utf8"); // eslint-disable-line no-sync
+fs.writeFileSync(customersDataFile, "[]", "utf8"); // eslint-disable-line no-sync
 
 service.use(express.json());
 

@@ -72,13 +72,21 @@ const renderApp = (req, res, initialState, basePath) => {
 const createServer = (port) => {
     const app = express();
     const petStoreCellUrl = process.env.PET_STORE_CELL_URL;
+    const guestMode = process.env.GUEST_MODE;
 
     app.use("/app", express.static(path.join(__dirname, "/app")));
 
     // Proxy API requests to controller
     const parsedPetStoreCellUrl = new URL(petStoreCellUrl);
     app.use("/api", proxy(parsedPetStoreCellUrl.host, {
-        proxyReqPathResolver: (req) => parsedPetStoreCellUrl.pathname + req.url
+        proxyReqPathResolver: function(req) {
+            let path = parsedPetStoreCellUrl.pathname + req.url;
+            if (path.startsWith("//")) {
+                path = path.substr(1);
+            }
+            console.log(path);
+            return path;
+        }
     }));
 
     /*
@@ -88,6 +96,7 @@ const createServer = (port) => {
         const initialState = {
             user: req.get(CELLERY_USER_HEADER)
         };
+        const guestMode = process.env.GUEST_MODE;
         const basePath = process.env.BASE_PATH;
 
         // Setting the Pet Store Cell URL for the Swagger Generated Client

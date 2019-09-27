@@ -69,7 +69,8 @@ class App extends React.Component {
 
         this.state = {
             accountPopoverElement: null,
-            cartItemsCount: props.cart.getItems().length
+            cartItemsCount: props.cart.getItems().length,
+            user: ""
         };
     }
 
